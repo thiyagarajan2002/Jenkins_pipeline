@@ -10,6 +10,12 @@ COPY app.py requirements.txt data.json /home/project/
 # Install dependencies
 RUN pip install -r requirements.txt
 
+# Install supervisor
+RUN apt-get update && apt-get install -y supervisor
+
+# Copy the supervisor config file
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
 # Expose port 5000 for Flask
 EXPOSE 5000
 
