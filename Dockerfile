@@ -8,10 +8,13 @@ WORKDIR /home/project
 RUN useradd -m flaskuser
 
 # Create the project directory
-RUN mkdir -p /home/project && chown -R flaskuser:flaskuser /home/project
+RUN mkdir -p /home/project 
 
 # Copy the project file
 COPY app.py requirements.txt data.json /home/project/
+
+# Change ownership of the files
+RUN chown -R flaskuser:flaskuser /home/project
 
 # Install dependencies
 RUN pip install -r requirements.txt
