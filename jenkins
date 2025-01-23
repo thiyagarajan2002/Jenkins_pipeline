@@ -1,0 +1,41 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Clone Repository') {
+            steps {
+                script {
+                    // This will clone the repository into the workspace
+                    git 'https://github.com/thiyagarajan2002/Jenkins_pipeline.git'  // Replace with your repo URL
+                }
+            }
+        }
+
+        stage('Build') {
+            steps {
+                script {
+                    sh 'docker build -t flask_api . && docker run -p 5000:5000 flask_api'
+                }
+            }
+        }
+
+        stage('Test') {
+            steps {
+                script {
+                    sh './test.sh'
+                }
+            }
+        }
+
+    }
+
+    post {
+        success {
+            echo 'Pipeline successfully completed!'
+        }
+        failure {
+            echo 'Pipeline failed, please check the logs.'
+        }
+    }
+}
