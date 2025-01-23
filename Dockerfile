@@ -4,6 +4,15 @@ FROM python:3.8
 # Set the working directory inside container 
 WORKDIR /home/project
 
+# Create a non-root user
+RUN useradd -m flaskuser
+
+# Change ownership of project files to this user
+RUN chown -R flaskuser:flaskuser /home/project
+
+# Create the project directory
+RUN mkdir -p /home/project && chown -R flaskuser:flaskuser /home/project
+
 # Copy the project file
 COPY app.py requirements.txt data.json /home/project/
 
@@ -15,12 +24,6 @@ RUN apt-get update && apt-get install -y supervisor
 
 # Copy the supervisor config file
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Create a non-root user
-RUN useradd -m flaskuser
-
-# Change ownership of project files to this user
-RUN chown -R flaskuser:flaskuser /home/project
 
 # Switch to this user
 USER flaskuser
