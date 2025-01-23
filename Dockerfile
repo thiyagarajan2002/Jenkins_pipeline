@@ -19,6 +19,7 @@ COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 # Expose port 5000 for Flask
 EXPOSE 5000
 
-# Run Flask with gunicorn (daemon mode runs in the background)
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+# Use supervisor to run Gunicorn in background mode
+CMD ["supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
 
