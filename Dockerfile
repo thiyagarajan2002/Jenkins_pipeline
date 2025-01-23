@@ -14,4 +14,5 @@ RUN pip install -r requirements.txt
 EXPOSE 5000
 
 # Run Flask with gunicorn (daemon mode runs in the background)
-CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app", "--daemon"]
+CMD ["gunicorn", "--bind", "0.0.0.0:5000", "app:app"]
+
