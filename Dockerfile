@@ -7,9 +7,6 @@ WORKDIR /home/project
 # Create a non-root user
 RUN useradd -m flaskuser
 
-# Change ownership of project files to this user
-RUN chown -R flaskuser:flaskuser /home/project
-
 # Create the project directory
 RUN mkdir -p /home/project && chown -R flaskuser:flaskuser /home/project
 
