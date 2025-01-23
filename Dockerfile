@@ -16,6 +16,15 @@ RUN apt-get update && apt-get install -y supervisor
 # Copy the supervisor config file
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Create a non-root user
+RUN useradd -m flaskuser
+
+# Change ownership of project files to this user
+RUN chown -R flaskuser:flaskuser /home/project
+
+# Switch to this user
+USER flaskuser
+
 # Expose port 5000 for Flask
 EXPOSE 5000
 
