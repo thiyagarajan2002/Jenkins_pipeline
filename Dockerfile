@@ -1,6 +1,8 @@
 # Set the base image as python
-FROM python:3.8
+FROM ubuntu
 
+# Install python and pip
+RUN apt-get install python3 && apt install python3-pip
 # Set the working directory inside container 
 WORKDIR /home/project
 
