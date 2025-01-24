@@ -1,12 +1,14 @@
 # Set the base image as python
 FROM ubuntu
 
-# Install python and pip
-# Install Python 3 and pip for Python 3
-RUN apt-get update && apt-get install -y python3 python3-pip
+# Install python and pip also install venv
+RUN apt-get update && apt-get install -y python3 python3-pip && apt install python3-venv
 
 # Set the working directory inside container 
 WORKDIR /home/project
+
+# Activate venv
+RUN python3 -m venv myenv
 
 # Copy the project file
 COPY app.py requirements.txt data.json /home/project/
