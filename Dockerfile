@@ -2,7 +2,7 @@
 FROM ubuntu
 
 # Install python and pip also install venv
-RUN apt-get update && apt-get install -y python3 python3-pip && apt install python3-venv
+RUN apt-get update && apt-get install -y python3 python3-pip && apt install python3-venv -y
 
 # Set the working directory inside container 
 WORKDIR /home/project
