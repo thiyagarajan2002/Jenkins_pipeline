@@ -2,7 +2,8 @@
 FROM ubuntu
 
 # Install python and pip
-RUN apt-get install python && apt install python-pip
+# Install Python 3 and pip for Python 3
+RUN apt-get update && apt-get install -y python3 python3-pip
 
 # Set the working directory inside container 
 WORKDIR /home/project
