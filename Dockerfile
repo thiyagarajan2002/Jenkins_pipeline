@@ -2,7 +2,7 @@
 FROM ubuntu
 
 # Install python and pip
-RUN apt-get install python3 && apt install python3-pip
+RUN apt-get install python && apt install python-pip
 
 # Set the working directory inside container 
 WORKDIR /home/project
@@ -14,6 +14,6 @@ COPY app.py requirements.txt data.json /home/project/
 RUN pip install -r requirements.txt
 
 # Run the flask application in backgroung
-RUN nohup python3 app.py > flask.log 2>&1 &
+RUN nohup python app.py > flask.log 2>&1 &
 
 
