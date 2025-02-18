@@ -14,7 +14,7 @@ RUN python3 -m venv /env
 COPY app.py requirements.txt data.json /home/project/
 
 # Activate the virtual environment and install dependencies
-RUN /env/bin/pip install -r requirements.txt
+RUN /env/bin/pip install --no-cache-dir -r requirements.txt
 
 # Run the flask application in backgroung
 RUN python3 app.py
