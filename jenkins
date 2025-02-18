@@ -4,7 +4,6 @@ pipeline {
     environment {
         GIT_REPO = 'https://github.com/thiyagarajan2002/Jenkins_pipeline.git'
         GIT_BRANCH = 'main'  // Update to your correct branch
-        GIT_CREDENTIALS_ID = 'your-credentials-id'  // Uncomment and provide credentials ID if the repo is private
     }
 
     stages {
@@ -12,31 +11,39 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    // This will clone the repository into the workspace, specify branch and credentials if needed
-                    if (env.GIT_CREDENTIALS_ID) {
-                        // If credentials are required (e.g., private repo)
-                        git credentialsId: env.GIT_CREDENTIALS_ID, url: env.GIT_REPO, branch: env.GIT_BRANCH
-                    } else {
-                        // If no credentials required (e.g., public repo)
-                        git url: env.GIT_REPO, branch: env.GIT_BRANCH
+                    // Cloning the repository for a public repo without credentials
+                    git url: env.GIT_REPO, branch: env.GIT_BRANCH
+                }
+            }
+        }
+
+        stage("Parallel") {
+            parallel {
+
+                stage('Build') {
+                    steps {
+                        script {
+                            sh 'docker build -t python_app .'
+                            sh 'docker run -p 5000:5000 python_app'
+                        }
                     }
                 }
-            }
-        }
 
-        stage('Build') {
-            steps {
-                script {
-                    sh 'docker build -t flask_api .'
-                    sh 'docker run -p 5000:5000 flask_api'
+                stage('Test') {
+                    steps {
+                        script {
+                            sh 'sleep 30'
+                            sh 'chmod +x test.sh && ./test.sh'
+                        }
+                    }
                 }
-            }
-        }
-
-        stage('Test') {
-            steps {
-                script {
-                    sh 'chmod +x test.sh && ./test.sh'
+                 stage('stop') {
+                    steps {
+                        script {
+                            sh 'sleep 40'
+                            sh 'docker stop $(docker ps -q)'
+                        }
+                    }
                 }
             }
         }
