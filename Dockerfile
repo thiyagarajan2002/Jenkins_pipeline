@@ -19,5 +19,5 @@ RUN /env/bin/pip install --no-cache-dir -r requirements.txt
 # Expose port 5000 for the Flask application
 EXPOSE 5000
 
-# Set the command to run the Flask app using the virtual environment's Python interpreter
-CMD ["/env/bin/python3", "app.py"]
+# Run the app using Gunicorn
+CMD ["/env/bin/gunicorn", "-b", "0.0.0.0:5000", "app:app"]
