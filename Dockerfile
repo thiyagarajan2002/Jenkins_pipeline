@@ -17,6 +17,5 @@ COPY app.py requirements.txt data.json /home/project/
 RUN /env/bin/pip install -r requirements.txt
 
 # Run the flask application in backgroung
-RUN nohup python app.py > flask.log 2>&1 &
-
+RUN python app.py
 
